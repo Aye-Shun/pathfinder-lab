@@ -1,0 +1,10 @@
+{
+  "name": "pathfinder-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "An interactive grid for comparing breadth-first search and Dijkstra's algorithm.",
+  "scripts": { "test": "node --test" },
+  "engines": { "node": ">=22" },
+  "license": "MIT"
+}
