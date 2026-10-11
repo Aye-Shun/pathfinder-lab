@@ -1,14 +1,14 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#11151f"><title>Pathfinder Lab</title><link rel="stylesheet" href="src/style.css"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f6f6f6"><title>Pathfinder Lab</title><link rel="stylesheet" href="src/style.css"></head>
 <body><main>
-  <header><p class="eyebrow">ALGORITHMS / INTERACTIVE LAB</p><h1>Find a way through.</h1><p class="intro">Paint a map. Explore the search. See why the shortest route depends on what you measure.</p></header>
+  <header><p class="eyebrow">Algorithm comparison</p><h1>BFS and Dijkstra</h1><p class="intro">Choose an algorithm, add walls or terrain, and run a search.</p></header>
   <section class="workspace" aria-label="Pathfinding lab">
-    <div class="toolbar"><label>Algorithm<select id="algorithm" aria-label="Algorithm"><option value="dijkstra">Dijkstra · lowest cost</option><option value="bfs">BFS · fewest steps</option></select></label><button id="run" class="primary">Run search ↗</button><button id="example">Load example</button><button id="reset">Reset map</button></div>
+    <div class="toolbar"><label>Algorithm<select id="algorithm" aria-label="Algorithm"><option value="dijkstra">Dijkstra · lowest cost</option><option value="bfs">BFS · fewest steps</option></select></label><button id="run" class="primary">Run search</button><button id="example">Load example</button><button id="reset">Reset map</button></div>
     <div class="paint" aria-label="Paint tools"><span>Paint</span><button data-mode="wall" aria-pressed="true">Wall</button><button data-mode="terrain" aria-pressed="false">Terrain · cost 5</button><button data-mode="erase" aria-pressed="false">Erase</button><button data-mode="start" aria-pressed="false">Start</button><button data-mode="goal" aria-pressed="false">Goal</button></div>
     <div class="grid-scroll"><div id="grid" aria-label="Editable map, 12 rows and 20 columns"></div></div>
     <div class="below"><p id="status" role="status">Choose a paint tool, then click a cell. Or load the weighted example.</p><div class="legend"><span>🟩 Start</span><span>🟪 Goal</span><span>Blue: explored</span><span>Gold: route</span></div></div>
   </section>
   <section class="explain"><article><h2>Fewest steps</h2><p>Breadth-first search treats every move equally. It finds a route with the smallest number of moves, even when that route crosses expensive terrain.</p></article><article><h2>Lowest cost</h2><p>Dijkstra adds the cost of each cell you enter. It can take a longer route to avoid expensive terrain. Moves are up, right, down, or left.</p></article></section>
-  <footer>A small JavaScript algorithm experiment. Your map stays in this page; refreshing resets it.</footer>
+  <footer>The map resets when you refresh.</footer>
 </main><script type="module" src="src/app.js"></script></body></html>

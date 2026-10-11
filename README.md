@@ -1,34 +1,28 @@
 # Pathfinder Lab
 
-A small, interactive JavaScript grid that makes the difference between **fewest steps** and **lowest cost** visible. Paint walls and expensive terrain, move the start and goal, then compare breadth-first search with Dijkstra's algorithm.
+A JavaScript grid for comparing breadth-first search and Dijkstra's algorithm. Add walls and weighted terrain, then compare the route, cost, and number of explored cells.
 
-![Pathfinder Lab weighted-grid example](docs/preview.png)
+![BFS and Dijkstra grid](docs/preview.png)
 
-## Run locally
+## Try it
 
-No install or API key is needed. Serve this folder with Python 3:
+Serve the project folder with Python 3:
 
 ```sh
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-Open <http://127.0.0.1:8000>. A local server is required because the page uses JavaScript modules.
+Open <http://127.0.0.1:8000>. The page uses JavaScript modules, so opening `index.html` directly is not enough. There are no packages to install.
 
-1. Click **Load example** to create a map with expensive terrain.
-2. Run **BFS** and note the number of steps and terrain cost.
-3. Run **Dijkstra** on the same map. Its route can be longer but cheaper.
-4. Choose a paint tool and click cells to explore your own map.
+Click **Load example**, run **BFS**, then run **Dijkstra** on the same map. BFS takes the route with fewer steps; Dijkstra can take a longer route that costs less. Use the paint tools to change the map or move its start and goal.
 
-## What it demonstrates
+## How the search works
 
-- Breadth-first search minimizes moves when every move is treated equally.
-- Dijkstra minimizes the sum of the costs of entered cells.
-- A wall has cost 0, ordinary terrain costs 1, and painted terrain costs 5.
-- Moves are orthogonal; diagonal moves are excluded. The start cell has no entry cost.
-- Exploration and route animations respect reduced-motion settings.
-- Controls and cells work with a keyboard; small screens can scroll the map horizontally.
+Moves go up, right, down, or left. A wall is blocked, a normal cell costs 1, and painted terrain costs 5. The cost is paid when entering a cell; the start costs nothing.
 
-The search module is independent of the interface and accepts grids up to 10,000 cells. Dijkstra uses a straightforward linear frontier rather than a priority queue: this keeps the teaching implementation readable, but it is not designed for large maps. Its worst-case running time is O(V²); BFS runs in O(V + E). Both algorithms use O(V) space. The interactive map has 240 cells.
+`src/search.js` contains both algorithms without any page code. BFS uses a queue and minimizes the number of moves. Dijkstra tracks the cheapest known cost and picks the lowest-cost frontier cell next. It uses a linear scan instead of a priority queue, keeping the code short at the cost of O(V²) worst-case time. BFS takes O(V + E); both use O(V) space.
+
+`src/app.js` handles the 12 × 20 map and displays the results. Editing clears the previous search, and refreshing resets the map. Cells and controls work with a keyboard, and animations respect reduced-motion settings.
 
 ## Tests
 
@@ -38,20 +32,10 @@ With Node.js 22 or newer:
 npm test
 ```
 
-Tests cover walls, boundaries, unreachable goals, weighted detours, adjacency, unchanged input, start equal to goal, and invalid grids. GitHub Actions runs them on Node 22 and 24 after publication.
+Tests check routes on uniform and weighted grids, blocked goals, boundaries, invalid input, and whether a search leaves the original grid unchanged. CI runs them on Node 22 and 24.
 
-## Project map
+## Limits
 
-```text
-index.html           Interface and explanations
-src/search.js        Validated BFS and Dijkstra search
-src/app.js           Map editing and results
-src/style.css        Responsive layout and motion
-test/search.test.js  Algorithm checks
-```
+The interface is for small maps. The search module accepts up to 10,000 cells, but Dijkstra's linear frontier becomes slow on large grids. It has no diagonal movement, saved maps, or map import. Narrow screens can scroll the grid horizontally.
 
-The map is held only in memory. Refreshing resets it; there is no cloud storage or account system.
-
-## License
-
-MIT © 2026 Kenneth Park.
+[MIT license](LICENSE)
